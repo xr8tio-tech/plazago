@@ -1,0 +1,3426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlazaGo — Marketplace de ofertas | Compras épicas, precios ridículos</title>
+  <meta name="description" content="Marketplace PlazaGo: deportes, tecnología y moda con hasta 90% de descuento, envío gratis y devolución en 30 días.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #070b14;
+  --bg-soft: #0d1322;
+  --surface: #131a2c;
+  --surface-2: #1a2338;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --ink: #f4f7ff;
+  --muted: #9aa6c0;
+  --brand: #ff5a1f;
+  --brand-2: #ff8a3d;
+  --brand-soft: rgba(255, 90, 31, 0.14);
+  --green: #16a34a;
+  --star: #fbbf24;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --shadow: 0 18px 50px -18px rgba(0, 0, 0, 0.75);
+  --shadow-brand: 0 16px 40px -12px rgba(255, 90, 31, 0.5);
+  --font-display: "Sora", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h: 74px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(1000px 600px at 12% -5%, rgba(255, 90, 31, 0.14), transparent 60%),
+    radial-gradient(900px 620px at 92% 8%, rgba(56, 111, 255, 0.14), transparent 62%),
+    var(--bg);
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.container {
+  width: min(1180px, 92vw);
+  margin-inline: auto;
+}
+
+.section {
+  padding: clamp(64px, 9vw, 120px) 0;
+  position: relative;
+}
+
+.section-alt {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 55%);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(30px, 4vw, 54px);
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-2);
+  margin-bottom: 10px;
+}
+
+.eyebrow-light {
+  color: #ffd7c2;
+}
+
+.section-head h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+  max-width: 22ch;
+}
+
+.section-head .h2-em,
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--brand), #ffb056 55%, var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- TOPBAR / MARQUEE ---------- */
+.topbar {
+  background: linear-gradient(90deg, var(--brand), #ff7a2f);
+  color: #1a0c04;
+  font-weight: 600;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px 0;
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 42px;
+  padding-right: 42px;
+}
+
+.marquee-group span::after {
+  content: "•";
+  margin-left: 42px;
+  opacity: 0.55;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  backdrop-filter: blur(16px);
+  background: rgba(7, 11, 20, 0.72);
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.header.is-scrolled {
+  background: rgba(7, 11, 20, 0.94);
+  border-bottom-color: var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: var(--header-h);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+}
+
+.logo-accent {
+  color: var(--brand);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 8px 8px 16px;
+  color: var(--muted);
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.search:focus-within {
+  border-color: rgba(255, 90, 31, 0.55);
+  box-shadow: 0 0 0 4px var(--brand-soft);
+}
+
+.search input {
+  flex: 1;
+  background: none;
+  border: 0;
+  outline: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  min-width: 0;
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+.search button {
+  background: linear-gradient(120deg, var(--brand), var(--brand-2));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.86rem;
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.search button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-left: auto;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.nav a {
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s var(--ease);
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--brand);
+  border-radius: 2px;
+  transition: width 0.28s var(--ease);
+}
+
+.nav a:hover {
+  color: var(--ink);
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.icon-btn:hover {
+  color: var(--ink);
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--brand);
+  border-radius: 999px;
+}
+
+.cart-badge.is-pop {
+  animation: pop 0.4s var(--ease);
+}
+
+.cart-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:.3s;z-index:90}
+.cart-overlay.is-on{opacity:1;pointer-events:auto}
+.cart-panel{position:fixed;top:0;right:0;height:100vh;width:min(420px,100%);background:radial-gradient(120% 120% at 100% 0%,rgba(255,255,255,.08),rgba(255,255,255,.04)),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border-left:1px solid rgba(255,255,255,.12);box-shadow:-40px 0 80px rgba(15,23,42,.55);transform:translateX(100%);transition:.4s ease;z-index:95;display:flex;flex-direction:column;backdrop-filter:blur(14px)}
+.cart-panel.is-open{transform:translateX(0)}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.1)}
+.cart-header h3{margin:0;font-size:18px}
+.cart-body{flex:1;overflow:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
+.cart-empty{color:var(--muted);text-align:center;margin-top:40px}
+.cart-item{display:flex;gap:14px;align-items:center;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(255,255,255,.06),transparent)}
+.cart-item img{width:72px;height:72px;border-radius:12px;object-fit:cover}
+.cart-item-info{flex:1;display:flex;flex-direction:column;gap:6px}
+.cart-item-info h4{margin:0;font-size:15px}
+.cart-item-meta{color:var(--muted);font-size:13px}
+.cart-item-price{font-weight:600}
+.cart-footer{border-top:1px solid rgba(255,255,255,.1);padding:18px 22px;display:flex;flex-direction:column;gap:12px}
+.cart-total{display:flex;align-items:center;justify-content:space-between;font-size:16px}
+.cart-total strong{font-size:20px}
+#cartCheckout{width:100%;justify-content:center}
+
+/* ---------- Indicador de origen de datos ---------- */
+.data-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.data-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.data-badge.is-live {
+  color: var(--green);
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(22, 163, 74, 0.1);
+}
+
+.data-badge.is-live::before {
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.18);
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.45);
+  }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  padding: clamp(52px, 8vw, 104px) 0 clamp(56px, 9vw, 120px);
+  overflow: hidden;
+}
+
+.hero-glows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+.glow-a {
+  width: 520px;
+  height: 520px;
+  background: rgba(255, 90, 31, 0.5);
+  top: -180px;
+  left: -120px;
+}
+
+.glow-b {
+  width: 480px;
+  height: 480px;
+  background: rgba(56, 111, 255, 0.42);
+  top: -120px;
+  right: -140px;
+}
+
+.grid-plane {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -46%;
+  height: 70%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 62px 62px;
+  transform: perspective(520px) rotateX(66deg);
+  transform-origin: center bottom;
+  mask-image: linear-gradient(to top, #000 5%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 78%);
+}
+
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(30px, 5vw, 70px);
+}
+
+.hero-tagline {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffd0b8;
+  background: var(--brand-soft);
+  border: 1px solid rgba(255, 90, 31, 0.35);
+  border-radius: 999px;
+  padding: 7px 16px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.14rem);
+  max-width: 52ch;
+  margin-bottom: 30px;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), background 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--brand), var(--brand-2));
+  color: #fff;
+  box-shadow: var(--shadow-brand);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px -14px rgba(255, 90, 31, 0.65);
+}
+
+.btn-ghost {
+  border-color: var(--line-strong);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-ghost:hover {
+  background: var(--surface);
+  transform: translateY(-3px);
+}
+
+.btn-lg {
+  padding: 17px 34px;
+  font-size: 1.05rem;
+}
+
+.hero-badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.hero-badges li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-art {
+  position: relative;
+  height: clamp(360px, 44vw, 520px);
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+.hero-card {
+  position: absolute;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  background: var(--surface);
+  transform-style: preserve-3d;
+}
+
+.hero-card img,
+.hero-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-a {
+  width: 46%;
+  aspect-ratio: 4 / 5;
+  left: 0;
+  top: 6%;
+}
+
+.card-b {
+  width: 44%;
+  aspect-ratio: 3 / 4;
+  right: 4%;
+  top: 0;
+}
+
+.card-c {
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  left: 26%;
+  bottom: -4%;
+  z-index: 2;
+}
+
+.hero-chip {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(7, 11, 20, 0.82);
+  border: 1px solid rgba(255, 90, 31, 0.5);
+  color: #ffd0b8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.floaty {
+  width: 100%;
+  height: 100%;
+  animation: floaty 6s var(--ease) infinite;
+}
+
+.delay-1 {
+  animation-delay: -2s;
+}
+
+.delay-2 {
+  animation-delay: -4s;
+}
+
+@keyframes floaty {
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* ---------- STATS ---------- */
+.stats {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 34px 0;
+}
+
+.stat {
+  text-align: center;
+  padding: 6px 12px;
+  border-right: 1px solid var(--line);
+}
+
+.stat:last-child {
+  border-right: 0;
+}
+
+.stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  background: linear-gradient(120deg, #fff, #ffc9ad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+/* ---------- FEATURES 01-04 ---------- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.feature-card {
+  position: relative;
+  padding: 30px 26px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, var(--surface), var(--bg-soft));
+  border: 1px solid var(--line);
+  transform-style: preserve-3d;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.feature-card:hover {
+  border-color: rgba(255, 90, 31, 0.45);
+  box-shadow: var(--shadow);
+}
+
+.feature-num {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.18);
+}
+
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  color: var(--brand-2);
+  background: var(--brand-soft);
+  border: 1px solid rgba(255, 90, 31, 0.32);
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+/* ---------- SHOWCASE 3D ---------- */
+.showcase {
+  position: relative;
+  padding: clamp(60px, 9vw, 110px) 0 clamp(80px, 11vw, 150px);
+  overflow: hidden;
+  text-align: center;
+}
+
+.showcase-hint {
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.scene {
+  width: min(420px, 70vw);
+  height: min(420px, 70vw);
+  margin: 0 auto;
+  perspective: 1400px;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.car-item {
+  position: absolute;
+  margin: 0;
+  width: 62%;
+  aspect-ratio: 1 / 1;
+  left: 19%;
+  top: 19%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.85);
+  transform: rotateY(var(--a)) translateZ(360px);
+  backface-visibility: hidden;
+}
+
+.car-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 14px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: linear-gradient(to top, rgba(7, 11, 20, 0.9), transparent);
+}
+
+.showcase-name {
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 700;
+}
+
+/* ---------- VIDEO ROWS ---------- */
+.video-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: clamp(26px, 5vw, 64px);
+  margin-bottom: clamp(40px, 6vw, 76px);
+}
+
+.video-row:last-child {
+  margin-bottom: 0;
+}
+
+.vrow-b .video-media {
+  order: 2;
+}
+
+.video-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 10;
+  background: #0a0f1c;
+  transform-style: preserve-3d;
+}
+
+.video-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 11, 20, 0.55), transparent 55%);
+  pointer-events: none;
+}
+
+.video-chip {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 7px 15px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(7, 11, 20, 0.72);
+  border: 1px solid rgba(255, 90, 31, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.video-text h3 {
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  margin-bottom: 14px;
+}
+
+.video-text p {
+  color: var(--muted);
+  max-width: 48ch;
+  margin-bottom: 20px;
+}
+
+.tag-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-list li {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5ef;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+/* ---------- FILTERS ---------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filter-tab {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: color 0.22s var(--ease), background 0.22s var(--ease), border-color 0.22s var(--ease), transform 0.22s var(--ease);
+}
+
+.filter-tab:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.filter-tab.is-active {
+  color: #fff;
+  background: linear-gradient(120deg, var(--brand), var(--brand-2));
+  border-color: transparent;
+  box-shadow: var(--shadow-brand);
+}
+
+.filter-hot {
+  border-color: rgba(255, 90, 31, 0.4);
+  color: #ffbd99;
+}
+
+/* ---------- CATÁLOGO ---------- */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 24px;
+  perspective: 1400px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--surface), var(--bg-soft));
+  border: 1px solid var(--line);
+  transform-style: preserve-3d;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.product-card:hover {
+  border-color: rgba(255, 90, 31, 0.42);
+  box-shadow: var(--shadow);
+}
+
+.product-card.is-hidden {
+  display: none;
+}
+
+.product-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #0a0f1c;
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.07);
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(120deg, #ff3d3d, var(--brand));
+  padding: 6px 11px;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px -8px rgba(255, 61, 61, 0.8);
+}
+
+.fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--ink);
+  background: rgba(7, 11, 20, 0.66);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(6px);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.fav:hover {
+  transform: scale(1.1);
+}
+
+.fav.is-on {
+  color: #ff5a5a;
+  background: rgba(255, 90, 90, 0.16);
+  border-color: rgba(255, 90, 90, 0.55);
+}
+
+.fav.is-on svg {
+  fill: currentColor;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 18px 20px;
+  flex: 1;
+}
+
+.cat-chip {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--brand-2);
+  background: var(--brand-soft);
+  border: 1px solid rgba(255, 90, 31, 0.3);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.product-info h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.rating {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.stars {
+  color: var(--star);
+  letter-spacing: 1px;
+}
+
+.variants {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.v-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+
+.v-opt {
+  min-width: 34px;
+  height: 32px;
+  padding: 0 10px;
+  display: grid;
+  place-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease), background 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.v-opt:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.v-opt.is-active {
+  color: #fff;
+  border-color: var(--brand);
+  background: rgba(255, 90, 31, 0.2);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+.v-opt.swatch {
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--sw, var(--surface-2));
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.v-opt.swatch.is-active {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.price-original {
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.price-off {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green);
+  background: rgba(22, 163, 74, 0.14);
+  border: 1px solid rgba(22, 163, 74, 0.35);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.add {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 13px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #fff;
+  background: linear-gradient(120deg, var(--brand), var(--brand-2));
+  transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.add:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+/* ---------- REVIEWS ---------- */
+.reviews-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.overview-card {
+  padding: 28px 24px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, var(--surface), var(--bg-soft));
+  border: 1px solid var(--line);
+  position: sticky;
+  top: calc(var(--header-h) + 18px);
+}
+
+.overview-score {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+
+.overview-score strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.stars-lg {
+  color: var(--star);
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+  margin: 8px 0 6px;
+}
+
+.overview-score p {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.dist {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.dist li {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.dist b {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+}
+
+.bar {
+  height: 7px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand), #ffb056);
+}
+
+.see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-2);
+}
+
+.see-all span {
+  transition: transform 0.22s var(--ease);
+}
+
+.see-all:hover span {
+  transform: translateX(4px);
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.review-card {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: transform 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+}
+
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand), #6d5cff);
+}
+
+.review-head h4 {
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.review-date {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.review-head .stars {
+  margin-left: auto;
+  font-size: 0.88rem;
+}
+
+.review-card p {
+  color: #c4cee6;
+  font-size: 0.92rem;
+}
+
+/* ---------- FAQ ---------- */
+.faq-wrap {
+  max-width: 900px;
+}
+
+.faq {
+  display: grid;
+  gap: 12px;
+}
+
+.faq-item {
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease);
+}
+
+.faq-item[open] {
+  border-color: rgba(255, 90, 31, 0.4);
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 56px 20px 22px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  position: relative;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--brand-2);
+  transition: transform 0.28s var(--ease);
+}
+
+.faq-item[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.faq-item p {
+  padding: 0 22px 22px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  animation: fadeIn 0.3s var(--ease);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ---------- CTA ---------- */
+.cta {
+  position: relative;
+  padding: clamp(70px, 10vw, 130px) 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7);
+}
+
+.cta-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(700px 400px at 50% 40%, rgba(255, 90, 31, 0.28), transparent 70%),
+    linear-gradient(180deg, rgba(7, 11, 20, 0.9), rgba(7, 11, 20, 0.94));
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.cta-inner h2 {
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  margin-bottom: 16px;
+}
+
+.cta-inner p {
+  color: #d7deee;
+  margin-bottom: 28px;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding-top: 56px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 34px;
+  padding-bottom: 44px;
+}
+
+.footer-brand p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 14px;
+  max-width: 34ch;
+}
+
+.footer-grid h4 {
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.footer-grid a {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 4px 0;
+  transition: color 0.2s var(--ease);
+}
+
+.footer-grid a:hover {
+  color: var(--brand-2);
+}
+
+.pay-methods {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.muted-note {
+  color: #6b7693;
+  font-size: 0.82rem;
+  margin-top: 8px;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: #6b7693;
+  font-size: 0.84rem;
+}
+
+/* ---------- FLOATING ---------- */
+.wa-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: #fff;
+  background: #22c55e;
+  box-shadow: 0 16px 34px -12px rgba(34, 197, 94, 0.8);
+  transition: transform 0.24s var(--ease), filter 0.24s var(--ease);
+}
+
+.wa-fab:hover {
+  transform: scale(1.08);
+  filter: brightness(1.06);
+}
+
+.back-top {
+  position: fixed;
+  right: 22px;
+  bottom: 90px;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.28s var(--ease), transform 0.28s var(--ease);
+}
+
+.back-top.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 90;
+  transform: translate(-50%, 140%);
+  max-width: min(420px, 90vw);
+  padding: 13px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(19, 26, 44, 0.96);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  transition: transform 0.4s var(--ease);
+  text-align: center;
+}
+
+.toast.is-on {
+  transform: translate(-50%, 0);
+}
+
+/* ---------- REVEAL ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .nav {
+    display: none;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-art {
+    height: clamp(320px, 62vw, 460px);
+    max-width: 560px;
+  }
+
+  .reviews-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-card {
+    position: static;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .search {
+    display: none;
+  }
+
+  .video-row {
+    grid-template-columns: 1fr;
+  }
+
+  .vrow-b .video-media {
+    order: 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 18px;
+  }
+
+  .stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  .stat:nth-child(1),
+  .stat:nth-child(2) {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --radius-lg: 20px;
+  }
+
+  .header-inner {
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .hero-cta .btn {
+    flex: 1;
+  }
+
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .faq-item summary {
+    padding: 17px 48px 17px 18px;
+    font-size: 0.96rem;
+  }
+
+  .filter-tab {
+    padding: 9px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track,
+  .floaty {
+    animation: none;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .car-item {
+    transition: none;
+  }
+
+  .product-img,
+  .add,
+  .btn {
+    transition: none;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <div class="topbar" aria-hidden="true">
+    <div class="marquee">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Envío GRATIS en pedidos +$299</span>
+          <span>Devoluciones gratis en 30 días</span>
+          <span>Hasta 90% OFF hoy</span>
+          <span>2.4M+ pedidos entregados</span>
+          <span>Nuevas ofertas cada 12 h</span>
+          <span>Envío GRATIS en pedidos +$299</span>
+          <span>Devoluciones gratis en 30 días</span>
+          <span>Hasta 90% OFF hoy</span>
+        </div>
+        <div class="marquee-group">
+          <span>Envío GRATIS en pedidos +$299</span>
+          <span>Devoluciones gratis en 30 días</span>
+          <span>Hasta 90% OFF hoy</span>
+          <span>2.4M+ pedidos entregados</span>
+          <span>Nuevas ofertas cada 12 h</span>
+          <span>Envío GRATIS en pedidos +$299</span>
+          <span>Devoluciones gratis en 30 días</span>
+          <span>Hasta 90% OFF hoy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="logo" href="#inicio" aria-label="PlazaGo inicio">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" fill="#FF5A1F"/>
+        </svg>
+        <span>Plaza<span class="logo-accent">Go</span></span>
+      </a>
+
+      <form class="search" id="searchForm" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="Buscar: chamarras, celulares, tenis..." aria-label="Buscar productos">
+        <button type="submit">Buscar</button>
+      </form>
+
+      <nav class="nav" aria-label="Categorías">
+        <a href="#porque">Ventajas</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#showcase">Showroom 3D</a>
+        <a href="#videos">En acción</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" type="button" aria-label="Favoritos">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+          </svg>
+        </button>
+        <button class="icon-btn cart-btn" type="button" aria-label="Carrito, 0 artículos">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/>
+            <path d="M3 4h2l2.4 12.2A1.6 1.6 0 0 0 9 17.4h8a1.6 1.6 0 0 0 1.6-1.3L21 7H6"/>
+          </svg>
+          <span class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CART MODAL -->
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+  <aside class="cart-panel" id="cartPanel" aria-label="Carrito de compras" role="dialog" aria-modal="true">
+    <div class="cart-header">
+      <h3>Carrito</h3>
+      <button class="icon-btn" id="cartClose" aria-label="Cerrar carrito">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <p class="cart-empty">Tu carrito está vacío</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="btn-primary" id="cartCheckout">Finalizar compra</button>
+    </div>
+  </aside>
+
+
+  <main id="inicio">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-glows" aria-hidden="true">
+        <span class="glow glow-a"></span>
+        <span class="glow glow-b"></span>
+        <span class="grid-plane"></span>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-tagline">Marketplace de ofertas #1 · Envío gratis</p>
+          <h1>Compras épicas.<br>Precios <em>ridículos.</em></h1>
+          <p class="hero-sub">Millones de ofertas en deportes, tecnología y moda. Catálogo en vivo, variantes reales y precios de fábrica: siempre estrenas algo nuevo.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#catalogo">Explorar el catálogo →</a>
+            <a class="btn btn-ghost" href="#videos">Ver en acción</a>
+          </div>
+          <ul class="hero-badges" aria-label="Garantías">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Envío gratis +$299
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Devolución fácil 30 días
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Pago 100% seguro
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-art" id="heroArt" aria-hidden="true">
+          <div class="hero-card card-a">
+            <div class="floaty">
+              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" width="800" height="800">
+            </div>
+            <span class="hero-chip">-32% hoy</span>
+          </div>
+          <div class="hero-card card-b">
+            <div class="floaty delay-1">
+              <video class="hero-vid" src="https://assets.mixkit.co/videos/2983/2983-360.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+            </div>
+          </div>
+          <div class="hero-card card-c">
+            <div class="floaty delay-2">
+              <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80" alt="" loading="eager" width="800" height="800">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Números de PlazaGo">
+      <div class="container stats-grid">
+        <div class="stat">
+          <strong>24,318</strong>
+          <span>opiniones verificadas</span>
+        </div>
+        <div class="stat">
+          <strong>1.2M+</strong>
+          <span>clientes felices</span>
+        </div>
+        <div class="stat">
+          <strong>90%</strong>
+          <span>desc. máximo activo</span>
+        </div>
+        <div class="stat">
+          <strong>30 días</strong>
+          <span>devolución garantizada</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- POR QUÉ PLAZAGO: tarjetas numeradas 01-04 -->
+    <section class="section" id="porque">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Por qué PlazaGo</p>
+            <h2>Lo que hace <em class="h2-em">épicas</em> tus compras</h2>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-reveal>
+            <span class="feature-num">01</span>
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+            </div>
+            <h3>Envío 24/48 h</h3>
+            <p>Mismo día o al día siguiente en tu zona. Seguimiento en tiempo real desde el momento en que sale del almacén.</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <span class="feature-num">02</span>
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Precios de fábrica</h3>
+            <p>Hasta 90% menos que en tienda. Comprimos directo de fábrica y te pasamos el ahorro completo.</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <span class="feature-num">03</span>
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6M20.5 9A9 9 0 0 0 4.5 5L1 9m22 6-3.5 4a9 9 0 0 1-16-4"/></svg>
+            </div>
+            <h3>Devolución 30 días</h3>
+            <p>¿No te encaja o no te gusta? Regresas gratis y con el dinero de vuelta. Sin preguntas, sin letra chica.</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <span class="feature-num">04</span>
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12c0 4.4-3.6 8-8 8s-8-3.6-8-8 3.6-8 8-8c1.5 0 2.9.4 4.1 1.1L7 14l3 3 6.9-9.9c.7 1.2 1.1 2.6 1.1 4.1Z"/></svg>
+            </div>
+            <h3>Club PlazaGo</h3>
+            <p>Cupones semanales, rebajas anticipadas y envío gratis ilimitado para miembros. Únete gratis en 1 clic.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOWROOM 3D -->
+    <section class="showcase" id="showcase" aria-label="Catálogo giratorio en 3D">
+      <p class="showcase-hint">Desliza para girar el catálogo en 3D</p>
+      <div class="scene">
+        <div class="stage" id="stage">
+          <figure class="car-item" style="--a: 0deg">
+            <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80" alt="Balón de fútbol profesional" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Balón de Fútbol</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 40deg">
+            <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=800&q=80" alt="Raqueta de tenis" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Raqueta de Tenis</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 80deg">
+            <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80" alt="Gorra deportiva" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Gorra Deportiva</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 120deg">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80" alt="Celular 6.7 pulgadas" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Celular 6.7"</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 160deg">
+            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80" alt="Tablet 10 pulgadas" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Tablet 10"</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 200deg">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Reloj inteligente" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Reloj Smart Fit</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 240deg">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80" alt="Playera básica de algodón" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Playera Básica</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 280deg">
+            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80" alt="Pantalón de mezclilla slim" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Pantalón Slim</figcaption>
+          </figure>
+          <figure class="car-item" style="--a: 320deg">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80" alt="Chamarra acolchada ligera" loading="lazy" width="800" height="800">
+            <figcaption class="car-tag">Chamarra Ligera</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p class="showcase-name" id="showcaseName" aria-live="polite">Balón de Fútbol · $89</p>
+    </section>
+
+    <!-- PRODUCTOS EN ACCIÓN (VIDEOS) -->
+    <section class="section section-alt" id="videos">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Productos en acción</p>
+            <h2>La oferta, <em class="h2-em">en vivo</em></h2>
+          </div>
+        </div>
+
+        <div class="video-row vrow-a" data-reveal>
+          <div class="video-media">
+            <video src="https://assets.mixkit.co/videos/43483/43483-1080.mp4" autoplay muted loop playsinline preload="metadata" poster="https://assets.mixkit.co/videos/43483/43483-thumb-360-0.jpg" aria-hidden="true"></video>
+            <span class="video-chip">01 · Deportes</span>
+          </div>
+          <div class="video-text">
+            <h3>Deportes que sí se usan</h3>
+            <p>Balones, raquetas y equipamiento con la calidad que buscas y precios que no vas a creer.</p>
+            <ul class="tag-list" aria-label="Etiquetas">
+              <li>Envío rápido</li>
+              <li>Garantía 12 meses</li>
+              <li>Liga oficial</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="video-row vrow-b" data-reveal>
+          <div class="video-text">
+            <h3>Tecnología que estrenas hoy</h3>
+            <p>Celulares, tablets y wearables de última generación, con batería, pantalla y garantía verificadas.</p>
+            <ul class="tag-list" aria-label="Etiquetas">
+              <li>Original sellado</li>
+              <li>2 años de garantía</li>
+              <li>Apple &amp; Android</li>
+            </ul>
+          </div>
+          <div class="video-media">
+            <video src="https://assets.mixkit.co/videos/51134/51134-1080.mp4" autoplay muted loop playsinline preload="metadata" poster="https://assets.mixkit.co/videos/51134/51134-thumb-360-0.jpg" aria-hidden="true"></video>
+            <span class="video-chip">02 · Tecnología</span>
+          </div>
+        </div>
+
+        <div class="video-row vrow-a" data-reveal>
+          <div class="video-media">
+            <video src="https://assets.mixkit.co/videos/52055/52055-1080.mp4" autoplay muted loop playsinline preload="metadata" poster="https://assets.mixkit.co/videos/52055/52055-thumb-360-0.jpg" aria-hidden="true"></video>
+            <span class="video-chip">03 · Moda</span>
+          </div>
+          <div class="video-text">
+            <h3>Moda que estrena contigo</h3>
+            <p>La ropa que ves en foto es la que llega. Tallas reales, tejidos de calidad y estilos que no pasan de moda.</p>
+            <ul class="tag-list" aria-label="Etiquetas">
+              <li>Tallas S a XL</li>
+              <li>Devolución 30 días</li>
+              <li>Lookbook real</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO PROFESIONAL -->
+    <section class="section" id="catalogo">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Catálogo PlazaGo</p>
+            <h2>Todo lo que buscas, en un solo lugar</h2>
+          </div>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filtrar catálogo" data-reveal>
+          <button class="filter-tab is-active" type="button" data-filter="all" role="tab" aria-selected="true">Todos</button>
+          <button class="filter-tab" type="button" data-filter="deportes" role="tab" aria-selected="false">Deportes</button>
+          <button class="filter-tab" type="button" data-filter="tecnologia" role="tab" aria-selected="false">Tecnología</button>
+          <button class="filter-tab" type="button" data-filter="moda" role="tab" aria-selected="false">Moda</button>
+          <button class="filter-tab filter-hot" type="button" data-filter="oferta" role="tab" aria-selected="false">🔥 Ofertas</button>
+        </div>
+
+        <div class="cat-grid" id="catGrid">
+
+          <article class="product-card" data-cat="deportes" data-off="1">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80" alt="Balón de fútbol profesional" loading="lazy" width="800" height="800">
+              <span class="badge">-40%</span>
+              <button class="fav" type="button" aria-label="Agregar balón a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Deportes</span>
+              <h3>Balón de Fútbol Profesional</h3>
+              <p class="rating" aria-label="Calificación 4.7 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.7 · 2,104</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Talla</span>
+                <button class="v-opt is-active" type="button" data-v="5" aria-label="Talla 5">5</button>
+                <button class="v-opt" type="button" data-v="4" aria-label="Talla 4">4</button>
+              </div>
+              <div class="price-row">
+                <span class="price">$89</span>
+                <span class="price-original">$149</span>
+                <span class="price-off">-40%</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="deportes">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=800&q=80" alt="Raqueta de tenis" loading="lazy" width="800" height="800">
+              <span class="badge">-38%</span>
+              <button class="fav" type="button" aria-label="Agregar raqueta a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Deportes</span>
+              <h3>Raqueta de Tenis Carbono</h3>
+              <p class="rating" aria-label="Calificación 4.8 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 · 1,892</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Peso</span>
+                <button class="v-opt is-active" type="button" data-v="270 g" aria-label="270 gramos">270 g</button>
+                <button class="v-opt" type="button" data-v="300 g" aria-label="300 gramos">300 g</button>
+              </div>
+              <div class="price-row">
+                <span class="price">$249</span>
+                <span class="price-original">$399</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="deportes" data-off="1">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80" alt="Gorra deportiva" loading="lazy" width="800" height="800">
+              <span class="badge">-40%</span>
+              <button class="fav" type="button" aria-label="Agregar gorra a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Deportes</span>
+              <h3>Gorra Deportiva Antitranspirante</h3>
+              <p class="rating" aria-label="Calificación 4.6 de 5"><span class="stars" aria-hidden="true">★★★★☆</span> 4.6 · 3,417</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Color</span>
+                <button class="v-opt swatch is-active" type="button" data-v="Negro" style="--sw:#111827" aria-label="Color negro"></button>
+                <button class="v-opt swatch" type="button" data-v="Rojo" style="--sw:#DC2626" aria-label="Color rojo"></button>
+                <button class="v-opt swatch" type="button" data-v="Azul" style="--sw:#2563EB" aria-label="Color azul"></button>
+              </div>
+              <div class="price-row">
+                <span class="price">$59</span>
+                <span class="price-original">$99</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="tecnologia">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80" alt="Celular 6.7 pulgadas" loading="lazy" width="800" height="800">
+              <span class="badge">-32%</span>
+              <button class="fav" type="button" aria-label="Agregar celular a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Tecnología</span>
+              <h3>Celular 6.7" 128GB</h3>
+              <p class="rating" aria-label="Calificación 4.8 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 · 6,550</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Color</span>
+                <button class="v-opt swatch is-active" type="button" data-v="Negro" style="--sw:#111827" aria-label="Color negro"></button>
+                <button class="v-opt swatch" type="button" data-v="Azul" style="--sw:#2563EB" aria-label="Color azul"></button>
+                <button class="v-opt swatch" type="button" data-v="Verde" style="--sw:#16A34A" aria-label="Color verde"></button>
+              </div>
+              <div class="price-row">
+                <span class="price">$1,299</span>
+                <span class="price-original">$1,899</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="tecnologia">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80" alt="Tablet 10 pulgadas" loading="lazy" width="800" height="800">
+              <span class="badge">-31%</span>
+              <button class="fav" type="button" aria-label="Agregar tablet a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Tecnología</span>
+              <h3>Tablet 10" Full HD</h3>
+              <p class="rating" aria-label="Calificación 4.7 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.7 · 3,998</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Color</span>
+                <button class="v-opt swatch is-active" type="button" data-v="Gris" style="--sw:#9CA3AF" aria-label="Color gris"></button>
+                <button class="v-opt swatch" type="button" data-v="Dorada" style="--sw:#EAB308" aria-label="Color dorado"></button>
+              </div>
+              <div class="price-row">
+                <span class="price">$899</span>
+                <span class="price-original">$1,299</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="tecnologia" data-off="1">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Reloj inteligente" loading="lazy" width="800" height="800">
+              <span class="badge">-39%</span>
+              <button class="fav" type="button" aria-label="Agregar reloj a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Tecnología</span>
+              <h3>Reloj Inteligente Smart Fit</h3>
+              <p class="rating" aria-label="Calificación 4.5 de 5"><span class="stars" aria-hidden="true">★★★★☆</span> 4.5 · 8,231</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Color</span>
+                <button class="v-opt swatch is-active" type="button" data-v="Negro" style="--sw:#111827" aria-label="Color negro"></button>
+                <button class="v-opt swatch" type="button" data-v="Rosa" style="--sw:#EC4899" aria-label="Color rosa"></button>
+              </div>
+              <div class="price-row">
+                <span class="price">$399</span>
+                <span class="price-original">$649</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="moda" data-off="1">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80" alt="Playera básica de algodón" loading="lazy" width="800" height="800">
+              <span class="badge">-39%</span>
+              <button class="fav" type="button" aria-label="Agregar playera a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Moda</span>
+              <h3>Playera Básica de Algodón</h3>
+              <p class="rating" aria-label="Calificación 4.7 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.7 · 12,844</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Talla</span>
+                <button class="v-opt" type="button" data-v="S" aria-label="Talla S">S</button>
+                <button class="v-opt is-active" type="button" data-v="M" aria-label="Talla M">M</button>
+                <button class="v-opt" type="button" data-v="L" aria-label="Talla L">L</button>
+                <button class="v-opt" type="button" data-v="XL" aria-label="Talla XL">XL</button>
+              </div>
+              <div class="price-row">
+                <span class="price">$79</span>
+                <span class="price-original">$129</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="moda" data-off="1">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80" alt="Pantalón de mezclilla slim" loading="lazy" width="800" height="800">
+              <span class="badge">-40%</span>
+              <button class="fav" type="button" aria-label="Agregar pantalón a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Moda</span>
+              <h3>Pantalón de Mezclilla Slim</h3>
+              <p class="rating" aria-label="Calificación 4.6 de 5"><span class="stars" aria-hidden="true">★★★★☆</span> 4.6 · 9,012</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Talla</span>
+                <button class="v-opt" type="button" data-v="28" aria-label="Talla 28">28</button>
+                <button class="v-opt is-active" type="button" data-v="30" aria-label="Talla 30">30</button>
+                <button class="v-opt" type="button" data-v="32" aria-label="Talla 32">32</button>
+                <button class="v-opt" type="button" data-v="34" aria-label="Talla 34">34</button>
+              </div>
+              <div class="price-row">
+                <span class="price">$199</span>
+                <span class="price-original">$329</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+          <article class="product-card" data-cat="moda">
+            <div class="product-media">
+              <img class="product-img" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80" alt="Chamarra ligera" loading="lazy" width="800" height="800">
+              <span class="badge">-36%</span>
+              <button class="fav" type="button" aria-label="Agregar chamarra a favoritos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <span class="cat-chip">Moda</span>
+              <h3>Chamarra Acolchada Ligera</h3>
+              <p class="rating" aria-label="Calificación 4.9 de 5"><span class="stars" aria-hidden="true">★★★★★</span> 4.9 · 5,367</p>
+              <div class="variants" role="group" aria-label="Variantes">
+                <span class="v-label">Talla</span>
+                <button class="v-opt" type="button" data-v="S" aria-label="Talla S">S</button>
+                <button class="v-opt is-active" type="button" data-v="M" aria-label="Talla M">M</button>
+                <button class="v-opt" type="button" data-v="L" aria-label="Talla L">L</button>
+              </div>
+              <div class="price-row">
+                <span class="price">$349</span>
+                <span class="price-original">$549</span>
+              </div>
+              <button class="add" type="button">Agregar al carrito</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- OPINIONES -->
+    <section class="section section-alt reviews" id="opiniones">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Opiniones verificadas</p>
+            <h2>Miles de clientes ya lo compran</h2>
+          </div>
+        </div>
+
+        <div class="reviews-layout" data-reveal>
+          <div class="overview-card">
+            <div class="overview-score">
+              <strong>4.8</strong>
+              <div class="stars-lg" role="img" aria-label="Calificación general 4.8 de 5 estrellas">★★★★★</div>
+              <p>24,318 opiniones verificadas</p>
+            </div>
+            <ul class="dist" aria-label="Distribución de calificaciones">
+              <li><span>5 ★</span><div class="bar"><i style="width:82%"></i></div><b>82%</b></li>
+              <li><span>4 ★</span><div class="bar"><i style="width:12%"></i></div><b>12%</b></li>
+              <li><span>3 ★</span><div class="bar"><i style="width:4%"></i></div><b>4%</b></li>
+              <li><span>2 ★</span><div class="bar"><i style="width:1%"></i></div><b>1%</b></li>
+              <li><span>1 ★</span><div class="bar"><i style="width:1%"></i></div><b>1%</b></li>
+            </ul>
+            <a class="see-all" href="#opiniones">Escribir una opinión <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="review-grid">
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">LG</span>
+                <div><h4>Laura G.</h4><p class="review-date">Compra verificada · hace 2 días</p></div>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</span>
+              </div>
+              <p>La chamarra es tal cual la foto: ligera, cómoda y abrigadora. Llegó dos días antes y el empaque venía intacto.</p>
+            </article>
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">CM</span>
+                <div><h4>Carlos M.</h4><p class="review-date">Compra verificada · hace 4 días</p></div>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</span>
+              </div>
+              <p>El reloj se ve increíble, la pantalla es nítida y la batería dura casi una semana. Excelente precio por lo que ofrece.</p>
+            </article>
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">MR</span>
+                <div><h4>Mariana R.</h4><p class="review-date">Compra verificada · hace 1 semana</p></div>
+                <span class="stars" role="img" aria-label="4 de 5 estrellas" aria-hidden="true">★★★★☆</span>
+              </div>
+              <p>El balón es de muy buena calidad y rebota excelente en la cancha. Le pongo 4 estrellas solo porque hubiera querido otra talla.</p>
+            </article>
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">JP</span>
+                <div><h4>Jorge P.</h4><p class="review-date">Compra verificada · hace 1 semana</p></div>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</span>
+              </div>
+              <p>Compré el celular y la tablet en el mismo pedido. Todo llegó perfecto y ya les pedí un reloj a mis papás.</p>
+            </article>
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">ST</span>
+                <div><h4>Sofía T.</h4><p class="review-date">Compra verificada · hace 2 semanas</p></div>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</span>
+              </div>
+              <p>La playera es suave y la talla quedó perfecta. El algodón se siente de buena calidad. Ya pedí otra para mi hermano.</p>
+            </article>
+            <article class="review-card">
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">AV</span>
+                <div><h4>Andrés V.</h4><p class="review-date">Compra verificada · hace 3 semanas</p></div>
+                <span class="stars" role="img" aria-label="3 de 5 estrellas" aria-hidden="true">★★★☆☆</span>
+              </div>
+              <p>El pantalón es bonito y de buen corte, aunque la entrega tardó unos días más de lo indicado. Por calidad vale la pena.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq-wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="eyebrow">Preguntas frecuentes</p>
+            <h2>Resolvemos tus dudas</h2>
+          </div>
+        </div>
+        <div class="faq" data-reveal>
+          <details class="faq-item" open>
+            <summary>¿El envío realmente es gratis?</summary>
+            <p>Sí, para pedidos desde $299 de cualquier categoría. Si tu pedido no alcanza la cifra, el costo se calcula al momento de pagar y es de los más bajos del mercado. Entrega en 24–48 h en la mayoría de las ciudades.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Cómo funcionan las devoluciones?</summary>
+            <p>Tienes 30 días desde la entrega para devolver cualquier artículo sin costo. Inicias la devolución desde tu cuenta, imprimes la etiqueta y eliges si quieres tu dinero de vuelta o un cambio de talla o color.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Los productos son originales?</summary>
+            <p>Todo el catálogo es 100% original y sellado. Trabajamos directo con fábrica y distribuidores autorizados, y cada producto incluye garantía verificable de 12 a 24 meses según la categoría.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Puedo pagar en mi moneda local?</summary>
+            <p>Sí. Aceptamos tarjetas de crédito y débito, PayPal, transferencia y pago en efectivo vía OXXO. Los precios que ves ya incluyen impuestos: pagas exactamente lo que aparece.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Qué pasa si mi producto llega dañado?</summary>
+            <p>Nos escribes en las primeras 48 horas, te enviamos un reemplazo sin costo alguno o te regresamos el 100% del dinero, tú decides. No pedimos que filmes prueba alguna para casos de envío dañado.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Cómo me entero de las ofertas relámpago?</summary>
+            <p>Únete al Club PlazaGo (gratis): cada 12 horas publicamos cupones exclusivos y rebajas anticipadas. También puedes activar las notificaciones del carrito y te avisamos cuando un favorito baja de precio.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta">
+      <video class="cta-video" src="https://assets.mixkit.co/videos/40766/40766-360.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+      <div class="cta-overlay" aria-hidden="true"></div>
+      <div class="container cta-inner">
+        <p class="eyebrow eyebrow-light">Últimas horas</p>
+        <h2>¿Listo para tu primera compra?</h2>
+        <p>Únete a 1.2M de compradores que ya estrenan con los precios más bajos de la web. Tu próxima oferta favorita está a un clic.</p>
+        <a class="btn btn-primary btn-lg" href="#catalogo">Empezar a comprar</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#inicio" aria-label="PlazaGo inicio">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" fill="#FF5A1F"/>
+          </svg>
+          <span>Plaza<span class="logo-accent">Go</span></span>
+        </a>
+        <p>El marketplace de ofertas donde todos compran como millonarios.</p>
+      </div>
+      <div>
+        <h4>Compra</h4>
+        <a href="#catalogo">Deportes</a>
+        <a href="#catalogo">Tecnología</a>
+        <a href="#catalogo">Moda</a>
+        <a href="#opiniones">Opiniones</a>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#faq">Envíos y entregas</a>
+        <a href="#faq">Devoluciones</a>
+        <a href="#faq">Contáctanos</a>
+      </div>
+      <div>
+        <h4>Paga seguro</h4>
+        <p class="pay-methods">Visa · Mastercard · PayPal · OXXO</p>
+        <p class="muted-note">Encriptación SSL 256 bits.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 PlazaGo. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <a class="wa-fab" id="waFab" href="https://wa.me/5215500000000?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20una%20oferta%20de%20PlazaGo." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5l-.3.5c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l1-1.1c.2-.3.4-.2.7-.1.3.1 1.8.9 2.1 1 .3.2.5.2.6.3 0 .1 0 .5-.2 1Z"/>
+    </svg>
+  </a>
+  <button class="back-top" id="backTop" type="button" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script>
+gsap.registerPlugin(ScrollTrigger);
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+const toastEl = document.getElementById("toast");
+let toastTimer;
+
+function showToast(message) {
+  if (!toastEl) return;
+  toastEl.textContent = message;
+  toastEl.classList.add("is-on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 2600);
+}
+
+function ensureVideos(root) {
+  (root || document).querySelectorAll("video").forEach((video) => {
+    video.muted = true;
+    const play = video.play();
+    if (play && typeof play.catch === "function") play.catch(() => {});
+  });
+}
+
+ensureVideos();
+
+const header = document.getElementById("siteHeader");
+const backTop = document.getElementById("backTop");
+
+function onScroll() {
+  if (header) header.classList.toggle("is-scrolled", window.scrollY > 12);
+  if (backTop) backTop.classList.toggle("is-on", window.scrollY > 600);
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+if (backTop) {
+  backTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+}
+
+/* ---------- Reveal on scroll ---------- */
+const revealDone = new WeakSet();
+
+function initReveal(root) {
+  const items = gsap.utils.toArray("[data-reveal]", root || document).filter((item) => !revealDone.has(item));
+
+  if (reduceMotion) {
+    items.forEach((item) => {
+      revealDone.add(item);
+      gsap.set(item, { opacity: 1, y: 0 });
+    });
+    return;
+  }
+
+  items.forEach((item) => {
+    revealDone.add(item);
+    gsap.to(item, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: item,
+        start: "top 88%",
+        once: true
+      }
+    });
+  });
+}
+
+initReveal(document);
+
+/* ---------- Hero: parallax 3D con el puntero ---------- */
+const heroArt = document.getElementById("heroArt");
+
+if (heroArt && finePointer && !reduceMotion) {
+  const layers = [
+    { el: heroArt.querySelector(".card-a"), depth: 26 },
+    { el: heroArt.querySelector(".card-b"), depth: 44 },
+    { el: heroArt.querySelector(".card-c"), depth: 16 }
+  ].filter((layer) => layer.el);
+
+  const setters = layers.map((layer) => ({
+    depth: layer.depth,
+    x: gsap.quickTo(layer.el, "x", { duration: 0.7, ease: "power3.out" }),
+    y: gsap.quickTo(layer.el, "y", { duration: 0.7, ease: "power3.out" }),
+    rx: gsap.quickTo(layer.el, "rotationX", { duration: 0.7, ease: "power3.out" }),
+    ry: gsap.quickTo(layer.el, "rotationY", { duration: 0.7, ease: "power3.out" })
+  }));
+
+  const hero = document.querySelector(".hero");
+
+  hero.addEventListener("pointermove", (event) => {
+    const rect = hero.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    setters.forEach((setter) => {
+      setter.x(px * setter.depth);
+      setter.y(py * setter.depth);
+      setter.ry(px * 8);
+      setter.rx(-py * 8);
+    });
+  });
+
+  hero.addEventListener("pointerleave", () => {
+    setters.forEach((setter) => {
+      setter.x(0);
+      setter.y(0);
+      setter.rx(0);
+      setter.ry(0);
+    });
+  });
+}
+
+/* ---------- Hero: parallax de profundidad al hacer scroll ---------- */
+if (!reduceMotion && heroArt) {
+  gsap.to(".card-a", {
+    yPercent: 12,
+    ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+  });
+  gsap.to(".card-c", {
+    yPercent: -10,
+    ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+  });
+}
+
+/* ---------- Showcase: anillo 3D giratorio ---------- */
+let ringData = [
+  { name: "Balón de Fútbol", price: 89 },
+  { name: "Raqueta de Tenis", price: 249 },
+  { name: "Gorra Deportiva", price: 59 },
+  { name: 'Celular 6.7"', price: 1299 },
+  { name: 'Tablet 10"', price: 899 },
+  { name: "Reloj Smart Fit", price: 399 },
+  { name: "Playera Básica", price: 79 },
+  { name: "Pantalón Slim", price: 199 },
+  { name: "Chamarra Ligera", price: 349 }
+];
+
+const stage = document.getElementById("stage");
+const showcaseName = document.getElementById("showcaseName");
+
+function ringItems() {
+  return gsap.utils.toArray(".car-item");
+}
+
+function ringStep() {
+  const total = ringItems().length || 1;
+  return 360 / total;
+}
+
+function setRingLabel(rotation) {
+  if (!showcaseName) return;
+  const items = ringItems();
+  if (!items.length) return;
+  const normalized = ((-rotation % 360) + 360) % 360;
+  const index = Math.round(normalized / ringStep()) % ringData.length;
+  const item = ringData[index] || ringData[0];
+  if (!item) return;
+  const label = `${item.name} · $${Number(item.price).toLocaleString("es-MX")}`;
+  if (showcaseName.textContent !== label) showcaseName.textContent = label;
+}
+
+function updateRing(items) {
+  if (!items || !items.length) return;
+  ringData = items.map((item) => ({ name: item.name, price: item.price }));
+  ringItems().forEach((item, index) => {
+    if (reduceMotion) item.style.setProperty("--a", `${index * ringStep()}deg`);
+  });
+  setRingLabel(0);
+}
+
+if (stage && ringItems().length) {
+  if (reduceMotion) {
+    gsap.set(stage, { rotationY: 0 });
+    ringItems().forEach((item, index) => item.style.setProperty("--a", `${index * ringStep()}deg`));
+    setRingLabel(0);
+  } else {
+    const spin = gsap.to(stage, {
+      rotationY: 360,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#showcase",
+        start: "top 70%",
+        end: "+=1600",
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => setRingLabel(self.progress * 360)
+      }
+    });
+    gsap.set(stage, { rotationY: 0 });
+    setRingLabel(0);
+    void spin;
+  }
+}
+
+/* ---------- Parallax suave de los bloques de video ---------- */
+const videoParallaxDone = new WeakSet();
+
+function initVideoParallax(root) {
+  if (reduceMotion) return;
+  gsap.utils.toArray(".video-media", root || document).forEach((media) => {
+    if (videoParallaxDone.has(media)) return;
+    videoParallaxDone.add(media);
+    gsap.fromTo(
+      media,
+      { y: 34 },
+      {
+        y: -34,
+        ease: "none",
+        scrollTrigger: { trigger: media, start: "top bottom", end: "bottom top", scrub: 0.6 }
+      }
+    );
+  });
+}
+
+initVideoParallax(document);
+
+/* ---------- Tilt 3D ---------- */
+const tiltDone = new WeakSet();
+
+function initTilt(root) {
+  if (!finePointer || reduceMotion) return;
+  gsap.utils.toArray(".product-card, .feature-card", root || document).forEach((card) => {
+    if (tiltDone.has(card)) return;
+    tiltDone.add(card);
+    gsap.set(card, { transformPerspective: 900 });
+    const rx = gsap.quickTo(card, "rotationX", { duration: 0.5, ease: "power3.out" });
+    const ry = gsap.quickTo(card, "rotationY", { duration: 0.5, ease: "power3.out" });
+    const y = gsap.quickTo(card, "y", { duration: 0.5, ease: "power3.out" });
+
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+      ry(px * 10);
+      rx(-py * 10);
+      y(-6);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      rx(0);
+      ry(0);
+      y(0);
+    });
+  });
+}
+
+initTilt(document);
+
+/* ---------- Filtros del catálogo (delegado) ---------- */
+const filtersRoot = document.querySelector(".filters");
+
+if (filtersRoot) {
+  filtersRoot.addEventListener("click", (event) => {
+    const tab = event.target.closest(".filter-tab");
+    if (!tab) return;
+
+    const filter = tab.dataset.filter;
+    const tabs = gsap.utils.toArray(".filter-tab");
+
+    tabs.forEach((other) => {
+      const active = other === tab;
+      other.classList.toggle("is-active", active);
+      other.setAttribute("aria-selected", String(active));
+    });
+
+    let shown = 0;
+    gsap.utils.toArray("#catGrid .product-card").forEach((card) => {
+      const matches =
+        filter === "all" ||
+        (filter === "oferta" ? card.dataset.off === "1" : card.dataset.cat === filter);
+
+      if (matches) {
+        card.classList.remove("is-hidden");
+        shown += 1;
+        if (!reduceMotion) {
+          gsap.fromTo(
+            card,
+            { opacity: 0, scale: 0.94 },
+            { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out", overwrite: true }
+          );
+        }
+      } else {
+        card.classList.add("is-hidden");
+      }
+    });
+
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    showToast(`${shown} producto${shown === 1 ? "" : "s"} en ${tab.textContent.trim()}`);
+  });
+}
+
+/* ---------- Variantes (delegado) ---------- */
+document.addEventListener("click", (event) => {
+  const opt = event.target.closest(".v-opt");
+  if (!opt) return;
+
+  const group = opt.closest(".variants");
+  if (!group) return;
+
+  const label = group.querySelector(".v-label");
+  const type = label ? label.textContent.trim().toLowerCase() : "opción";
+
+  group.querySelectorAll(".v-opt").forEach((other) => other.classList.remove("is-active"));
+  opt.classList.add("is-active");
+  showToast(`${type.charAt(0).toUpperCase() + type.slice(1)}: ${opt.dataset.v}`);
+});
+
+/* ---------- Favoritos (delegado) ---------- */
+document.addEventListener("click", (event) => {
+  const button = event.target.closest(".fav");
+  if (!button) return;
+
+  button.classList.toggle("is-on");
+  showToast(button.classList.contains("is-on") ? "Agregado a favoritos" : "Quitado de favoritos");
+});
+
+/* ---------- Carrito (delegado) ---------- */
+const cartBadge = document.querySelector(".cart-badge");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartPanel = document.getElementById("cartPanel");
+const cartClose = document.getElementById("cartClose");
+const cartBody = document.getElementById("cartBody");
+const cartTotal = document.getElementById("cartTotal");
+const cartCheckout = document.getElementById("cartCheckout");
+let cartItems = [];
+
+function formatMoney(n) {
+  return `$${Number(n || 0).toLocaleString("es-MX")}`;
+}
+
+function renderCart() {
+  if (!cartBody) return;
+
+  if (!cartItems.length) {
+    cartBody.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
+    if (cartTotal) cartTotal.textContent = formatMoney(0);
+    if (cartBadge) cartBadge.textContent = "0";
+    return;
+  }
+
+  let html = "";
+  let total = 0;
+
+  cartItems.forEach((item) => {
+    total += Number(item.price || 0);
+    const meta = item.variant ? `<span class="cart-item-meta">${item.variant}</span>` : "";
+    html += `<article class="cart-item">
+      <img src="${item.img || ""}" alt="${item.title}">
+      <div class="cart-item-info">
+        <h4>${item.title}</h4>
+        ${meta}
+        <span class="cart-item-price">${formatMoney(item.price)}</span>
+      </div>
+    </article>`;
+  });
+
+  cartBody.innerHTML = html;
+  if (cartTotal) cartTotal.textContent = formatMoney(total);
+  if (cartBadge) {
+    cartBadge.textContent = String(cartItems.length);
+    cartBadge.classList.remove("is-pop");
+    void cartBadge.offsetWidth;
+    cartBadge.classList.add("is-pop");
+  }
+}
+
+function openCart() {
+  if (cartPanel) cartPanel.classList.add("is-open");
+  if (cartOverlay) {
+    cartOverlay.classList.add("is-on");
+    cartOverlay.setAttribute("aria-hidden", "false");
+  }
+  renderCart();
+}
+
+function closeCart() {
+  if (cartPanel) cartPanel.classList.remove("is-open");
+  if (cartOverlay) {
+    cartOverlay.classList.remove("is-on");
+    cartOverlay.setAttribute("aria-hidden", "true");
+  }
+}
+
+if (cartClose) cartClose.addEventListener("click", closeCart);
+if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
+
+if (cartCheckout) {
+  cartCheckout.addEventListener("click", () => {
+    showToast(cartItems.length ? "Compra simulada - ¡Gracias por tu pedido!" : "Tu carrito está vacío");
+    cartItems = [];
+    renderCart();
+    closeCart();
+  });
+}
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest(".add");
+  if (!button) return;
+
+  const card = button.closest(".product-card");
+  const titleEl = card ? card.querySelector("h3") : null;
+  const title = titleEl ? titleEl.textContent.trim() : "Producto";
+  const activeVariant = card ? card.querySelector(".v-opt.is-active") : null;
+  const variant = activeVariant ? activeVariant.dataset.v : "";
+  const priceEl = card ? card.querySelector(".price strong") : null;
+  const digits = priceEl ? priceEl.textContent.replace(/[^0-9.]/g, "") : "";
+  const price = digits ? parseFloat(digits) : 0;
+  const imgEl = card ? card.querySelector("img") : null;
+  const img = imgEl ? imgEl.getAttribute("src") : "";
+
+  cartItems.push({ title, variant, price, img });
+
+  if (cartBadge) {
+    cartBadge.textContent = String(cartItems.length);
+    cartBadge.classList.remove("is-pop");
+    void cartBadge.offsetWidth;
+    cartBadge.classList.add("is-pop");
+    if (!reduceMotion) {
+      gsap.fromTo(cartBadge, { scale: 1 }, { scale: 1.35, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.out" });
+    }
+  }
+
+  showToast(`${title}${variant ? ` (${variant})` : ""} agregado al carrito`);
+  openCart();
+});
+
+const cartButton = document.querySelector(".cart-btn");
+if (cartButton) {
+  cartButton.addEventListener("click", () => {
+    openCart();
+  });
+}
+
+/* ---------- Buscador ---------- */
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+
+if (searchForm && searchInput) {
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      showToast("Escribe qué producto estás buscando");
+      return;
+    }
+    const matches = gsap.utils
+      .toArray("#catGrid .product-card")
+      .filter((card) => card.textContent.toLowerCase().includes(query)).length;
+    showToast(matches ? `${matches} resultado${matches === 1 ? "" : "s"} para "${searchInput.value.trim()}"` : `Sin resultados para "${searchInput.value.trim()}"`);
+  });
+}
+
+/* ---------- FAQ: solo uno abierto ---------- */
+document.addEventListener(
+  "toggle",
+  (event) => {
+    const item = event.target.closest && event.target.closest(".faq-item");
+    if (!item || !item.open) return;
+    gsap.utils.toArray(".faq-item").forEach((other) => {
+      if (other !== item) other.open = false;
+    });
+  },
+  true
+);
+
+/* ---------- Botón WhatsApp ---------- */
+const waFab = document.getElementById("waFab");
+if (waFab) {
+  waFab.addEventListener("click", () => {
+    showToast("Abriendo WhatsApp...");
+  });
+}
+
+if (window.ScrollTrigger) {
+  window.addEventListener("load", () => ScrollTrigger.refresh());
+}
+
+/* ---------- API para el contenido que llega desde la base de datos ---------- */
+window.PlazaGo = {
+  initReveal: initReveal,
+  initTilt: initTilt,
+  initVideoParallax: initVideoParallax,
+  ensureVideos: ensureVideos,
+  updateRing: updateRing,
+  onData: function (datos) {
+    if (datos && datos.productos && datos.productos.length) {
+      updateRing(
+        datos.productos.map((p) => ({
+          name: p.nombre_corto || p.nombre,
+          price: p.precio
+        }))
+      );
+    }
+    initReveal(document);
+    initTilt(document);
+    initVideoParallax(document);
+    ensureVideos(document);
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+};
+
+</script>
+  <script>
+/* ==========================================================================
+   PlazaGo · carga de datos desde Supabase
+   --------------------------------------------------------------------------
+   La página trae el contenido en HTML (para que funcione aunque no haya red);
+   este script lo reemplaza por los datos vivos de Supabase cuando puede.
+
+   Config: edita PLAZAGO_DB_CONFIG (url + anonKey). La anonKey es pública
+   por diseño (solo lectura, las políticas RLS limitan a SELECT).
+   ========================================================================== */
+
+window.PLAZAGO_DB_CONFIG = window.PLAZAGO_DB_CONFIG || {
+  url: "https://wbgkckzvnphddzrzwqhk.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ2tja3p2bnBoZGR6cnp3cWhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2MTA4MTMsImV4cCI6MjEwODE4NjgxM30.M57Tte-0Sv0_wphH8WDzb_guXYyDfeYy0afnvAIjMfk",
+  timeoutMs: 8000,
+  enabled: true
+};
+
+(function () {
+  "use strict";
+
+  var CFG = window.PLAZAGO_DB_CONFIG;
+  var TABLAS = {
+    productos: "plazago_productos",
+    categorias: "plazago_categorias",
+    opiniones: "plazago_opiniones",
+    faq: "plazago_faq",
+    videos: "plazago_videos",
+    features: "plazago_features",
+    stats: "plazago_stats",
+    contenido: "plazago_contenido"
+  };
+
+  var FORMATO = new Intl.NumberFormat("es-MX");
+
+  /* ---------- helpers ---------- */
+
+  function esc(valor) {
+    return String(valor == null ? "" : valor)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function dinero(valor) {
+    return "$" + FORMATO.format(Math.round(Number(valor) || 0));
+  }
+
+  function estrellas(valor, total) {
+    var n = Math.round(Number(valor) || 0);
+    var max = total || 5;
+    return "★".repeat(Math.max(0, Math.min(n, max))) + "☆".repeat(Math.max(0, max - n));
+  }
+
+  function buscar(sel) {
+    return document.querySelector(sel);
+  }
+
+  function todos(sel, raiz) {
+    return Array.prototype.slice.call((raiz || document).querySelectorAll(sel));
+  }
+
+  function setTexto(sel, valor) {
+    var el = buscar(sel);
+    if (el && valor != null) el.textContent = valor;
+  }
+
+  /* ---------- cliente REST ---------- */
+
+  function request(tabla, query) {
+    var url = CFG.url.replace(/\/$/, "") + "/rest/v1/" + tabla + query;
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () {
+      ctrl.abort();
+    }, CFG.timeoutMs);
+
+    return fetch(url, {
+      signal: ctrl.signal,
+      headers: {
+        apikey: CFG.anonKey,
+        Authorization: "Bearer " + CFG.anonKey,
+        Accept: "application/json"
+      }
+    })
+      .then(function (res) {
+        clearTimeout(timer);
+        if (!res.ok) throw new Error(tabla + " -> HTTP " + res.status);
+        return res.json();
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  /* ---------- plantillas ---------- */
+
+  function tarjetaProducto(p) {
+    var off = p.destacado ? " data-off=\"1\"" : "";
+    var badge = p.etiqueta
+      ? "<span class=\"badge\">" + esc(p.etiqueta) + "</span>"
+      : "";
+    var original = p.precio_original
+      ? "<span class=\"price-original\">" + dinero(p.precio_original) + "</span>"
+      : "";
+    var desc = p.descuento
+      ? "<span class=\"price-off\">" + esc(p.descuento) + "</span>"
+      : "";
+    var rating = p.rating != null
+      ? "<p class=\"rating\" aria-label=\"Calificación " + esc(p.rating) + " de 5\">" +
+        "<span class=\"stars\" aria-hidden=\"true\">" + estrellas(p.rating) + "</span> " +
+        esc(p.rating) + " · " + FORMATO.format(p.opiniones || 0) + "</p>"
+      : "";
+    var variantes = "";
+    if (p.variantes && p.variantes.length) {
+      variantes = p.variantes
+        .map(function (v) {
+          var clases = "v-opt";
+          if (v.activo) clases += " is-active";
+          if (v.color) clases += " swatch";
+          var estilo = v.color ? " style=\"--sw:" + esc(v.color) + "\"" : "";
+          var etiqueta = v.color ? esc(v.valor) : esc(v.valor);
+          return (
+            "<button class=\"" + clases + "\" type=\"button\" data-v=\"" + etiqueta + "\"" +
+            estilo + " aria-label=\"" + etiqueta + "\">" +
+            (v.color ? "" : etiqueta) +
+            "</button>"
+          );
+        })
+        .join("");
+      variantes =
+        "<div class=\"variants\" role=\"group\" aria-label=\"Variantes\">" +
+        "<span class=\"v-label\">" + esc(p.variante_tipo || "Opción") + "</span>" +
+        variantes +
+        "</div>";
+    }
+
+    return (
+      "<article class=\"product-card\" data-cat=\"" + esc(p.categoria) + "\"" + off + ">" +
+        "<div class=\"product-media\">" +
+          "<img class=\"product-img\" src=\"" + esc(p.imagen) + "\" alt=\"" +
+            esc(p.imagen_alt || p.nombre) + "\" loading=\"lazy\" width=\"800\" height=\"800\">" +
+          badge +
+          "<button class=\"fav\" type=\"button\" aria-label=\"Agregar " + esc(p.nombre) + " a favoritos\">" +
+            "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" " +
+              "stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 " +
+              "12 5.6 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z\"/></svg>" +
+          "</button>" +
+        "</div>" +
+        "<div class=\"product-info\">" +
+          "<span class=\"cat-chip\">" + esc(p.categoria_texto || p.categoria) + "</span>" +
+          "<h3>" + esc(p.nombre) + "</h3>" +
+          rating +
+          variantes +
+          "<div class=\"price-row\">" +
+            "<span class=\"price\">" + dinero(p.precio) + "</span>" +
+            original + desc +
+          "</div>" +
+          "<button class=\"add\" type=\"button\">Agregar al carrito</button>" +
+        "</div>" +
+      "</article>"
+    );
+  }
+
+  function itemRing(p, i, total) {
+    var angulo = p.angulo != null ? p.angulo : (360 / total) * i;
+    return (
+      "<figure class=\"car-item\" style=\"--a: " + angulo + "deg\">" +
+        "<img src=\"" + esc(p.imagen) + "\" alt=\"" + esc(p.imagen_alt || p.nombre) +
+          "\" loading=\"lazy\" width=\"800\" height=\"800\">" +
+        "<figcaption class=\"car-tag\">" + esc(p.nombre_corto || p.nombre) + "</figcaption>" +
+      "</figure>"
+    );
+  }
+
+  function tarjetaOpinion(o) {
+    return (
+      "<article class=\"review-card\">" +
+        "<div class=\"review-head\">" +
+          "<span class=\"avatar\" aria-hidden=\"true\">" + esc(o.iniciales || "") + "</span>" +
+          "<div><h4>" + esc(o.autor) + "</h4>" +
+            "<p class=\"review-date\">" + esc(o.fecha || "") + "</p></div>" +
+          "<span class=\"stars\" role=\"img\" aria-label=\"" + (o.estrellas || 5) +
+            " de 5 estrellas\" aria-hidden=\"true\">" + estrellas(o.estrellas || 5) + "</span>" +
+        "</div>" +
+        "<p>" + esc(o.texto) + "</p>" +
+      "</article>"
+    );
+  }
+
+  function itemFaq(f) {
+    return (
+      "<details class=\"faq-item\"" + (f.abierta ? " open" : "") + ">" +
+        "<summary>" + esc(f.pregunta) + "</summary>" +
+        "<p>" + esc(f.respuesta) + "</p>" +
+      "</details>"
+    );
+  }
+
+  function filaVideo(v, i) {
+    var media =
+      "<div class=\"video-media\">" +
+        "<video src=\"" + esc(v.video_url) + "\" autoplay muted loop playsinline preload=\"metadata\"" +
+          (v.poster ? " poster=\"" + esc(v.poster) + "\"" : "") + " aria-hidden=\"true\"></video>" +
+        "<span class=\"video-chip\">" + esc(v.chip || "") + "</span>" +
+      "</div>";
+    var texto =
+      "<div class=\"video-text\">" +
+        "<h3>" + esc(v.titulo) + "</h3>" +
+        "<p>" + esc(v.texto || "") + "</p>" +
+        "<ul class=\"tag-list\" aria-label=\"Etiquetas\">" +
+          (v.etiquetas || [])
+            .map(function (et) {
+              return "<li>" + esc(et) + "</li>";
+            })
+            .join("") +
+        "</ul>" +
+      "</div>";
+    var clase = i % 2 === 0 ? "vrow-a" : "vrow-b";
+    return (
+      "<div class=\"video-row " + clase + "\" data-reveal>" +
+        (i % 2 === 0 ? media + texto : texto + media) +
+      "</div>"
+    );
+  }
+
+  function tarjetaFeature(f) {
+    return (
+      "<article class=\"feature-card\" data-reveal>" +
+        "<span class=\"feature-num\">" + esc(f.numero || "") + "</span>" +
+        "<div class=\"feature-icon\" aria-hidden=\"true\">" + (f.icono_svg || "") + "</div>" +
+        "<h3>" + esc(f.titulo) + "</h3>" +
+        "<p>" + esc(f.texto || "") + "</p>" +
+      "</article>"
+    );
+  }
+
+  function itemStat(s) {
+    return (
+      "<div class=\"stat\"><strong>" + esc(s.valor) + "</strong>" +
+      "<span>" + esc(s.etiqueta) + "</span></div>"
+    );
+  }
+
+  /* ---------- render ---------- */
+
+  var RENDER = {
+    productos: function (data) {
+      var grid = buscar("#catGrid");
+      if (grid && data.length) grid.innerHTML = data.map(tarjetaProducto).join("");
+
+      var stage = buscar("#stage");
+      if (stage && data.length) stage.innerHTML = data.map(itemRing).join("");
+    },
+
+    categorias: function (data) {
+      var filtros = buscar(".filters");
+      if (!filtros || !data.length) return;
+      var html = "<button class=\"filter-tab is-active\" type=\"button\" data-filter=\"all\" " +
+        "role=\"tab\" aria-selected=\"true\">Todos</button>";
+      data.forEach(function (c) {
+        html += "<button class=\"filter-tab\" type=\"button\" data-filter=\"" + esc(c.slug) +
+          "\" role=\"tab\" aria-selected=\"false\">" + esc(c.filtro_texto || c.nombre) + "</button>";
+      });
+      html += "<button class=\"filter-tab filter-hot\" type=\"button\" data-filter=\"oferta\" " +
+        "role=\"tab\" aria-selected=\"false\">\uD83D\uDD25 Ofertas</button>";
+      filtros.innerHTML = html;
+    },
+
+    opiniones: function (data) {
+      var grid = buscar(".review-grid");
+      if (grid && data.length) grid.innerHTML = data.map(tarjetaOpinion).join("");
+    },
+
+    faq: function (data) {
+      var wrap = buscar(".faq");
+      if (wrap && data.length) wrap.innerHTML = data.map(itemFaq).join("");
+    },
+
+    videos: function (data) {
+      var cont = buscar("#videos .container");
+      if (!cont || !data.length) return;
+      var head = cont.querySelector(".section-head");
+      var html = data.map(filaVideo).join("");
+      cont.innerHTML = (head ? head.outerHTML : "") + html;
+    },
+
+    features: function (data) {
+      var grid = buscar(".feature-grid");
+      if (grid && data.length) grid.innerHTML = data.map(tarjetaFeature).join("");
+    },
+
+    stats: function (data) {
+      var grid = buscar(".stats-grid");
+      if (grid && data.length) grid.innerHTML = data.map(itemStat).join("");
+    },
+
+    contenido: function (data) {
+      var porSeccion = {};
+      data.forEach(function (fila) {
+        (porSeccion[fila.seccion] = porSeccion[fila.seccion] || {})[fila.clave] = fila.valor;
+      });
+
+      var hero = porSeccion.hero;
+      if (hero) {
+        setTexto(".hero-tagline", hero.tagline);
+        var h1 = buscar(".hero h1");
+        if (h1 && hero.titulo) {
+          h1.innerHTML = esc(hero.titulo).replace(
+            /([A-Za-zÁÉÍÓÚÑáéíóúñ]+)\.\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+\.)/,
+            "$1.<br>$2"
+          );
+        }
+        setTexto(".hero-sub", hero.subtitulo);
+      }
+
+      var resumen = porSeccion.resumen_opiniones;
+      if (resumen) {
+        setTexto(".overview-score strong", resumen.promedio);
+        setTexto(".overview-score p", resumen.total);
+        var dist = buscar(".overview-card .dist");
+        if (dist && resumen.distribucion) {
+          dist.innerHTML = resumen.distribucion
+            .map(function (d) {
+              return (
+                "<li><span>" + d.estrellas + " ★</span>" +
+                "<div class=\"bar\"><i style=\"width:" + esc(d.ancho) + "%\"></i></div>" +
+                "<b>" + esc(d.porcentaje) + "</b></li>"
+              );
+            })
+            .join("");
+        }
+      }
+
+      var cta = porSeccion.cta;
+      if (cta) {
+        setTexto(".cta .eyebrow", cta.eyebrow);
+        setTexto(".cta h2", cta.titulo);
+        setTexto(".cta-inner p", cta.texto);
+        var btn = buscar(".cta .btn");
+        if (btn && cta.boton) btn.textContent = cta.boton;
+        var vid = buscar(".cta-video");
+        if (vid && cta.video_url) vid.src = cta.video_url;
+      }
+
+      var footer = porSeccion.footer;
+      if (footer) {
+        setTexto(".footer-brand p", footer.descripcion);
+        setTexto(".footer-bottom p", footer.copyright);
+      }
+    }
+  };
+
+  /* ---------- arranque ---------- */
+
+  function marcarEstado(modo) {
+    document.documentElement.setAttribute("data-plazago-data", modo);
+    var badge = document.getElementById("plazagoDataBadge");
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.id = "plazagoDataBadge";
+      badge.className = "data-badge";
+      var header = document.querySelector(".header .actions");
+      (header || document.querySelector(".header-inner")).appendChild(badge);
+    }
+    badge.textContent = modo === "live" ? "Datos en vivo" : "Datos locales";
+    badge.classList.toggle("is-live", modo === "live");
+  }
+
+  function pintar(datos) {
+    Object.keys(RENDER).forEach(function (seccion) {
+      var valor = datos[seccion];
+      if (!valor) return;
+      try {
+        RENDER[seccion](valor);
+      } catch (err) {
+        console.warn("[plazago] no se pudo pintar " + seccion, err);
+      }
+    });
+
+    if (window.PlazaGo && typeof window.PlazaGo.onData === "function") {
+      window.PlazaGo.onData(datos);
+    }
+    document.dispatchEvent(new CustomEvent("plazago:data", { detail: datos }));
+  }
+
+  function cargar() {
+    if (!CFG.enabled || !CFG.anonKey) {
+      marcarEstado("local");
+      return Promise.resolve(null);
+    }
+
+    var url = CFG.url.replace(/\/$/, "") + "/rest/v1/";
+    var cabeceras = {
+      apikey: CFG.anonKey,
+      Authorization: "Bearer " + CFG.anonKey,
+      Accept: "application/json"
+    };
+
+    var consultas = [
+      request(TABLAS.productos, "?select=*&activo=eq.true&order=orden.asc"),
+      request(TABLAS.categorias, "?select=*&order=orden.asc"),
+      request(TABLAS.opiniones, "?select=*&activo=eq.true&order=orden.asc"),
+      request(TABLAS.faq, "?select=*&activo=eq.true&order=orden.asc"),
+      request(TABLAS.videos, "?select=*&activo=eq.true&order=orden.asc"),
+      request(TABLAS.features, "?select=*&activo=eq.true&order=orden.asc"),
+      request(TABLAS.stats, "?select=*&order=orden.asc"),
+      request(TABLAS.contenido, "?select=*&order=orden.asc")
+    ];
+
+    return Promise.all(consultas)
+      .then(function (res) {
+        var datos = {
+          productos: res[0],
+          categorias: res[1],
+          opiniones: res[2],
+          faq: res[3],
+          videos: res[4],
+          features: res[5],
+          stats: res[6],
+          contenido: res[7]
+        };
+        pintar(datos);
+        marcarEstado("live");
+        console.info("[plazago] datos cargados desde Supabase");
+        return datos;
+      })
+      .catch(function (err) {
+        console.warn("[plazago] Supabase no disponible, se usa el contenido local:", err.message);
+        marcarEstado("local");
+        return null;
+      });
+  }
+
+  window.PlazaGoDB = {
+    config: CFG,
+    cargar: cargar,
+    estado: function () {
+      return document.documentElement.getAttribute("data-plazago-data") || "local";
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", cargar);
+  } else {
+    cargar();
+  }
+})();
+
+</script>
+</body>
+</html>
